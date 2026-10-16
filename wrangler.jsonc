@@ -5,6 +5,7 @@
   "assets": {
     "directory": ".",
     "binding": "ASSETS",
+    "exclude": [".git/**"],
     "not_found_handling": "single-page-application"
   }
 }
