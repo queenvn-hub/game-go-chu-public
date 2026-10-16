@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#6574f7" />
+  <meta name="description" content="Orbit Type Multilingual – game luyện gõ Việt, Anh và Indonesia có giải nghĩa song ngữ." />
+  <title>Phi Đội Ngôn Từ</title>
+  <link rel="stylesheet" href="./src/styles.css" />
+  <link rel="stylesheet" href="./src/ui/arcade.css" />
+  <link rel="preload" href="./assets/fonts/baloo2-800.ttf" as="font" type="font/ttf" crossorigin />
+  <link rel="preload" href="./assets/fonts/nunito-700.ttf" as="font" type="font/ttf" crossorigin />
+  <link rel="stylesheet" href="./src/ui/fonts.css" />
+  <link rel="stylesheet" href="./src/ui/play-menu.css" />
+  <link rel="stylesheet" href="./src/ui/play-reference.css" />
+  <link rel="stylesheet" href="./src/ui/neon-game.css" />
+  <link rel="stylesheet" href="./src/ui/course-reference.css" />
+  <link rel="stylesheet" href="./src/ui/custom-reference.css" />
+  <link rel="stylesheet" href="./src/minigames/arcade.css" />
+  <link rel="stylesheet" href="./src/minigames/scene3d.css" />
+  <script src="./assets/vendor/lucide/lucide.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <section id="menu-screen" class="screen menu-screen" aria-labelledby="game-title">
+      <div class="ambient ambient-one"></div>
+      <div class="ambient ambient-two"></div>
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Phi Đội Ngôn Từ" data-i18n-aria-label="appName">
+          <span class="brand-mark" aria-hidden="true">⌨</span>
+          <span data-i18n="appName">PHI ĐỘI NGÔN TỪ</span>
+        </a>
+        <div class="topbar-actions">
+          <button id="instructions-button" class="ghost-button" type="button">Hướng dẫn</button>
+          <button id="menu-sound-button" class="icon-button" type="button" aria-label="Bật hoặc tắt âm thanh" data-i18n-aria-label="soundToggle">🔊</button>
+        </div>
+      </header>
+
+      <nav class="menu-tabs" aria-label="Điều hướng menu chính" data-i18n-aria-label="mainNavigation">
+        <button class="menu-tab selected" type="button" data-menu-tab="play">CHƠI NGAY</button>
+        <button class="menu-tab" type="button" data-menu-tab="course">KHÓA HỌC</button>
+        <button class="menu-tab" type="button" data-menu-tab="minigames" data-i18n="miniTab">TRÒ CHƠI BỔ TRỢ</button>
+        <button class="menu-tab" type="button" data-menu-tab="custom">TẠO MÀN CHƠI</button>
+        <button class="menu-tab" type="button" data-menu-tab="instructions">HƯỚNG DẪN</button>
+      </nav>
+      <div id="menu-toast" class="menu-toast hidden" aria-live="polite"></div>
+
+      <main id="play-pane" class="menu-layout menu-pane" data-menu-pane="play">
+        <section class="hero-card">
+          <div class="eyebrow" data-i18n="heroEyebrow">ORBIT TYPE · BẢN DÙNG THỬ ĐA NGÔN NGỮ · MÁY TÍNH</div>
+          <h1 id="game-title"><span data-i18n="heroTitle">Gõ ngôn ngữ mới.</span><br /><span data-i18n="heroTitleAccent">Mỗi ký tự đúng - khai hỏa.</span></h1>
+          <p class="hero-copy" data-i18n="heroCopy">Chọn riêng ngôn ngữ giao diện, ngôn ngữ cần gõ và ngôn ngữ giải nghĩa. Bản dùng thử hỗ trợ Việt, Anh và Indonesia.</p>
+          <div class="hero-metrics">
+            <div><strong>135</strong><span data-i18n="concepts">khái niệm</span></div>
+            <div><strong>3</strong><span data-i18n="languages">ngôn ngữ</span></div>
+            <div><strong>3</strong><span data-i18n="languageLayers">lớp ngôn ngữ</span></div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="planet planet-main"><span id="hero-word-main">đỏ</span></div>
+            <div class="planet planet-small"><span id="hero-word-small">trường</span></div>
+            <div class="ship-illustration"><i></i><b></b></div>
+            <div class="shot-line"></div>
+          </div>
+        </section>
+
+        <section class="setup-card" aria-label="Thiết lập trò chơi" data-i18n-aria-label="setupAria">
+          <div class="setup-heading">
+            <div>
+              <span class="step-label" data-i18n="setupLabel">THIẾT LẬP NHIỆM VỤ</span>
+              <h2 data-i18n="choosePractice">Chọn cách luyện</h2>
+            </div>
+            <span id="best-score-label" class="best-score">Kỷ lục: 0</span>
+          </div>
+
+          <fieldset class="choice-section multilingual-settings" id="multilingual-settings">
+            <legend id="multilingual-settings-title" data-i18n="settingsTitle">CÀI ĐẶT ĐA NGÔN NGỮ</legend>
+            <div class="language-settings-grid">
+              <label><span id="interface-language-label" data-i18n="interfaceLanguage">Ngôn ngữ giao diện</span><select id="interface-language" aria-label="Ngôn ngữ giao diện" data-i18n-aria-label="interfaceLanguage"><option value="vi">Tiếng Việt</option><option value="en">English</option></select></label>
+              <label><span id="translation-language-label" data-i18n="translationLanguage">Ngôn ngữ giải nghĩa</span><select id="translation-language"><option value="none">Không hiển thị</option><option value="vi">Tiếng Việt</option><option value="en">English</option><option value="id">Bahasa Indonesia</option></select></label>
+            </div>
+            <div class="preset-grid" aria-label="Cấu hình nhanh" data-i18n-aria-label="quickPresets">
+              <button type="button" data-language-preset="vi-vi-en"><span aria-hidden="true">🇻🇳</span> <span data-i18n="presetViViEn">Việt học Việt · nghĩa Anh</span></button>
+              <button type="button" data-language-preset="en-vi-en"><span aria-hidden="true">🌍</span> <span data-i18n="presetEnViEn">English UI · học Việt</span></button>
+              <button type="button" data-language-preset="id-vi-id"><span aria-hidden="true">🇮🇩</span> <span data-i18n="presetIdViId">Indonesia học Việt</span></button>
+              <button type="button" data-language-preset="vi-en-vi"><span aria-hidden="true">🇻🇳</span> <span data-i18n="presetViEnVi">Việt học Anh</span></button>
+              <button type="button" data-language-preset="id-en-id"><span aria-hidden="true">🇮🇩</span> <span data-i18n="presetIdEnId">Indonesia học Anh</span></button>
+            </div>
+          </fieldset>
+
+          <fieldset class="choice-section">
+            <legend id="typing-language-label">1. Ngôn ngữ luyện gõ</legend>
+            <div class="mode-grid">
+              <button class="mode-card selected" type="button" data-mode="vietnamese" aria-pressed="true">
+                <span class="mode-icon">Ắ</span>
+                <span><strong data-i18n="modeVi">Tiếng Việt</strong><small data-i18n="modeViDesc">Luyện từ/cụm từ tiếng Việt bằng EVKey, UniKey, VNI hoặc Telex tích hợp.</small></span>
+                <i>✓</i>
+              </button>
+              <button class="mode-card" type="button" data-mode="english" aria-pressed="false">
+                <span class="mode-icon">A</span>
+                <span><strong data-i18n="modeEn">Tiếng Anh</strong><small data-i18n="modeEnDesc">Luyện từ/cụm từ tiếng Anh bằng bàn phím QWERTY.</small></span>
+                <i>✓</i>
+              </button>
+              <button class="mode-card" type="button" data-mode="indonesian" aria-pressed="false">
+                <span class="mode-icon">ID</span>
+                <span><strong data-i18n="modeId">Bahasa Indonesia</strong><small data-i18n="modeIdDesc">Luyện từ Indonesia bằng bàn phím QWERTY Latin.</small></span>
+                <i>✓</i>
+              </button>
+            </div>
+          </fieldset>
+
+          <fieldset id="keyboard-section" class="choice-section">
+            <legend data-i18n="keyboardLegend">2. Bộ gõ tiếng Việt</legend>
+            <div class="segmented" id="keyboard-choice">
+              <button class="selected" type="button" data-keyboard="system">UniKey / EVKey / VNI hệ thống</button>
+              <button type="button" data-keyboard="telex">Telex tích hợp</button>
+            </div>
+            <p id="keyboard-hint" class="field-hint">Bật EVKey/UniKey/VNI. Game nhận kết quả đã hoàn chỉnh từ vùng nhập ẩn.</p>
+            <div class="segmented diacritic-choice" id="vietnamese-diacritic-choice" aria-label="Chế độ dấu tiếng Việt">
+              <button class="selected" type="button" data-vietnamese-diacritics="accented">Có dấu</button>
+              <button type="button" data-vietnamese-diacritics="plain">Không dấu</button>
+            </div>
+          </fieldset>
+
+
+          <fieldset id="english-options-section" class="choice-section">
+            <legend data-i18n="bilingualLegend">2. Hỗ trợ học song ngữ</legend>
+            <div class="english-option-grid">
+              <label class="english-option-check"><input id="english-case-sensitive" type="checkbox" /><span><b data-i18n="caseSensitive">Phân biệt chữ hoa</b><small data-i18n="caseHint">Mặc định tắt để phù hợp người mới học.</small></span></label>
+              <label class="english-meaning-setting"><span data-i18n="meaningDisplay">Hiển thị nghĩa phụ</span><select id="english-meaning-mode"><option value="immediate">Hiện nghĩa ngay</option><option value="after">Chỉ hiện sau khi hoàn thành</option><option value="hidden">Ẩn nghĩa</option></select></label>
+            </div>
+            <p class="field-hint" data-i18n="translationSafe">Bản dịch chỉ để học, không tham gia kiểm tra đúng/sai và không nhận đạn.</p>
+          </fieldset>
+
+          <fieldset class="choice-section word-source-section">
+            <legend data-i18n="sourceLegend">3. Nguồn từ</legend>
+            <div class="segmented" id="word-source-choice">
+              <button class="selected" type="button" data-word-source="default">Kho mặc định · 135 concept</button>
+              <button type="button" data-word-source="custom" id="custom-source-choice" disabled data-i18n="customList">Danh sách tùy chỉnh</button>
+            </div>
+            <div class="word-source-summary">
+              <span id="word-source-summary">Đang dùng kho mặc định 135 concept đa ngôn ngữ.</span>
+              <button id="open-custom-loader" class="inline-link-button" type="button" data-i18n="createList">Tạo danh sách mới</button>
+            </div>
+          </fieldset>
+
+          <div class="form-grid">
+            <label>
+              <span data-i18n="speedLabel">Tốc độ</span>
+              <select id="difficulty-select">
+                 <option value="slowest">Chậm nhất · 50 giây</option>
+                 <option value="very-slow">Rất chậm · 40 giây</option>
+                 <option value="slow">Chậm · 30 giây</option>
+                 <option value="medium" selected>Vừa · 20 giây</option>
+                 <option value="fast">Nhanh · 9 giây</option>
+                 <option value="very-fast">Rất nhanh · 7 giây</option>
+                 <option value="dynamic">Tăng dần</option>
+              </select>
+            </label>
+            <label>
+              <span id="level-field-label">Cấp tiếng</span>
+              <select id="level-select">
+                 <option value="auto" selected data-i18n="autoLevel">Tự động tăng dần</option>
+                 <option value="easy" data-i18n="easy">Dễ</option>
+                 <option value="medium" data-i18n="medium">Vừa</option>
+                 <option value="hard" data-i18n="hard">Khó</option>
+              </select>
+            </label>
+            <label class="wide-field">
+              <span data-i18n="topicLabel">Chủ đề</span>
+              <select id="topic-select">
+                <option value="all">Tất cả chủ đề</option>
+                <option value="family">Gia đình</option>
+                <option value="school">Trường học</option>
+                <option value="animals">Động vật</option>
+                <option value="nature">Thiên nhiên</option>
+                <option value="objects">Đồ vật</option>
+                <option value="emotions">Cảm xúc</option>
+                <option value="transport">Giao thông</option>
+                <option value="science">Khoa học</option>
+                <option value="technology">Công nghệ</option>
+                <option value="vietnamese-culture">Văn hóa Việt Nam</option>
+              </select>
+            </label>
+          </div>
+
+          <button id="start-button" class="primary-button" type="button">
+            <span>BẮT ĐẦU NHIỆM VỤ</span><b>→</b>
+          </button>
+           <p id="speed-help-note" class="desktop-note" data-i18n="speedHelp">Khuyến nghị: Chrome hoặc Edge trên máy tính, độ phân giải từ 1366 × 768.</p>
+          <details class="trial-signup">
+            <summary id="trial-signup-title" data-i18n="signup">ĐĂNG KÝ DÙNG THỬ</summary>
+            <form id="trial-signup-form">
+              <div class="trial-grid">
+                 <label><span data-i18n="trialName">Tên</span><input name="name" required maxlength="80" /></label>
+                 <label><span data-i18n="trialEmail">Email</span><input name="email" type="email" maxlength="120" /></label>
+                 <label><span data-i18n="trialMessenger">Zalo / WhatsApp</span><input name="messenger" maxlength="120" /></label>
+                 <label><span data-i18n="trialCountry">Quốc gia</span><input name="country" maxlength="80" /></label>
+                 <label><span data-i18n="trialNative">Ngôn ngữ mẹ đẻ</span><input name="nativeLanguage" maxlength="80" /></label>
+                 <label><span data-i18n="trialLearning">Ngôn ngữ muốn học</span><select name="learningLanguage"><option value="vi">Tiếng Việt</option><option value="en">English</option><option value="id">Bahasa Indonesia</option></select></label>
+                 <label><span data-i18n="trialPurpose">Mục đích</span><select name="purpose"><option value="personal" data-i18n="purposePersonal">Cá nhân</option><option value="parent" data-i18n="purposeParent">Phụ huynh</option><option value="student" data-i18n="purposeStudent">Học sinh</option><option value="teacher" data-i18n="purposeTeacher">Giáo viên</option><option value="class" data-i18n="purposeClass">Lớp học</option><option value="center" data-i18n="purposeCenter">Trung tâm</option><option value="school" data-i18n="purposeSchool">Trường học</option><option value="other" data-i18n="purposeOther">Khác</option></select></label>
+                 <label><span data-i18n="trialPayment">Mức sẵn sàng trả phí</span><select name="willingnessToPay"><option value="unknown" data-i18n="paymentUnknown">Chưa xác định</option><option value="free" data-i18n="paymentFree">Chỉ dùng miễn phí</option><option value="small" data-i18n="paymentSmall">Có thể trả gói nhỏ</option><option value="full" data-i18n="paymentFull">Sẵn sàng mua bản đầy đủ</option><option value="school" data-i18n="paymentSchool">Quan tâm gói lớp/trường</option></select></label>
+              </div>
+               <label><span data-i18n="trialFeedback">Góp ý về từ/câu/dịch nghĩa bị sai</span><textarea name="feedback" rows="3" maxlength="800"></textarea></label>
+              <button id="trial-signup-submit" class="secondary-button" type="submit" data-i18n="saveTrial">GỬI ĐĂNG KÝ</button>
+               <small id="trial-signup-status" data-i18n="trialConfigNote">Bản tĩnh cần cấu hình một biểu mẫu online trong config.js để chủ web nhận đăng ký.</small>
+            </form>
+          </details>
+        </section>
+      </main>
+
+      <main id="custom-loader-pane" class="custom-loader-layout menu-pane hidden" data-menu-pane="custom" aria-labelledby="custom-loader-title">
+        <section class="custom-loader-header">
+          <img class="custom-explorer" src="./assets/custom-menu/explorer.png" alt="" />
+          <div>
+            <span class="step-label" data-i18n="customEyebrow">TỰ TẠO KHO TỪ · XỬ LÝ TRÊN THIẾT BỊ</span>
+            <h1 id="custom-loader-title" data-i18n="customTitle">Tạo màn chơi từ nội dung của bạn</h1>
+            <p data-i18n="customIntro">Dán văn bản, đọc TXT/MD/CSV, lấy nội dung URL hoặc dùng OCR. Mỗi mục hợp lệ trở thành một mục tiêu riêng.</p>
+          </div>
+          <button class="secondary-button loader-back-play" type="button">← <span data-i18n="backToPlay">Quay lại Chơi ngay</span></button>
+        </section>
+
+        <section class="custom-loader-grid">
+          <div class="custom-source-column">
+          <article class="loader-panel loader-source-panel">
+            <div class="loader-panel-heading">
+              <div><span class="loader-step">01</span><h2 data-i18n="chooseSource">Chọn nguồn nội dung</h2></div>
+              <span id="custom-character-count" class="loader-badge">0 ký tự</span>
+            </div>
+
+            <div class="custom-language-switcher" aria-label="Ngôn ngữ nội dung" data-i18n-aria-label="lessonLanguage">
+              <span data-i18n="lessonLanguage">Ngôn ngữ bài học</span>
+              <div class="segmented"><button class="selected" type="button" data-custom-language="vietnamese" data-i18n="modeVi">Tiếng Việt</button><button type="button" data-custom-language="english" data-i18n="modeEn">Tiếng Anh</button><button type="button" data-custom-language="indonesian" data-i18n="modeId">Bahasa Indonesia</button></div>
+            </div>
+
+            <div id="custom-source-buttons" class="source-switcher">
+              <button class="selected" type="button" data-custom-source="paste" data-i18n="pasteText">Dán văn bản</button>
+              <button type="button" data-custom-source="file" data-i18n="uploadTxt">Tải TXT</button>
+              <button type="button" data-custom-source="url" data-i18n="enterUrl">Nhập URL</button>
+              <button type="button" data-custom-source="ocr" data-i18n="imageOcr">Ảnh OCR</button>
+            </div>
+
+            <div id="custom-paste-panel" class="source-panel">
+              <label class="loader-field">
+                <span data-i18n="textContent">Nội dung văn bản</span>
+                <textarea id="custom-textarea" rows="10" maxlength="100000" placeholder="Dán đoạn văn, bài học hoặc danh sách từ tại đây..." data-i18n-placeholder="pastePlaceholder"></textarea>
+                <small id="custom-input-count">0 / 100.000</small>
+              </label>
+              <div class="loader-button-row">
+                <button id="custom-use-sample" class="loader-small-button" type="button" data-i18n="useSample">Dùng nội dung mẫu</button>
+                <button id="custom-clear-text" class="loader-small-button danger" type="button" data-i18n="clearContent">Xóa nội dung</button>
+                <button id="custom-analyze" class="loader-small-button primary" type="button" data-i18n="analyzeNow">Phân tích ngay</button>
+              </div>
+            </div>
+
+            <div id="custom-file-panel" class="source-panel hidden">
+              <label class="file-drop-zone" for="custom-file-input">
+                <strong data-i18n="dropTextFile">Thả hoặc chọn tệp văn bản</strong>
+                <span data-i18n="textFileSupport">TXT, MD, CSV · tối đa 2 MB · đọc hoàn toàn trên thiết bị</span>
+                <input id="custom-file-input" type="file" accept=".txt,.md,.csv,text/plain,text/markdown,text/csv" />
+              </label>
+              <div class="file-summary-line"><span id="custom-file-summary" data-i18n="noFile">Chưa chọn tệp</span><button id="custom-remove-file" type="button" data-i18n="removeFile">Xóa tệp</button></div>
+              <p class="loader-note" data-i18n="fileScope">Bản này tập trung vào tệp văn bản nhẹ; PDF và DOCX không được nhận.</p>
+            </div>
+
+            <div id="custom-url-panel" class="source-panel hidden">
+              <label class="loader-field">
+                <span data-i18n="webAddress">Địa chỉ trang web</span>
+                <div class="url-input-row"><input id="custom-url-input" type="url" maxlength="2048" placeholder="https://..." /><button id="custom-url-fetch" type="button" data-i18n="fetchContent">Lấy nội dung</button></div>
+              </label>
+              <p id="custom-url-status" class="loader-inline-status" data-i18n="urlHint">Trình duyệt sẽ thử đọc trực tiếp. Trang chặn CORS cần được dán nội dung thủ công.</p>
+            </div>
+
+            <div id="custom-ocr-panel" class="source-panel hidden ocr-source-panel">
+              <div class="ocr-intro">
+                <strong data-i18n="ocrFlow">Ảnh chụp → OCR → sửa văn bản → tạo bài học</strong>
+                <p data-i18n="ocrIntro">OCR chỉ được tải khi bạn mở chức năng này.</p>
+                <label class="ocr-language-select"><span data-i18n="ocrLanguage">Ngôn ngữ OCR</span><select id="custom-ocr-language"><option value="vie" data-i18n="ocrLanguageVi">Tiếng Việt</option><option value="vie+eng" data-i18n="ocrLanguageViEn">Tiếng Việt + English</option><option value="vie+ind" data-i18n="ocrLanguageViId">Tiếng Việt + Bahasa Indonesia</option><option value="eng" data-i18n="ocrLanguageEn">English</option><option value="ind" data-i18n="ocrLanguageId">Bahasa Indonesia</option><option value="ind+eng" data-i18n="ocrLanguageIdEn">Bahasa Indonesia + English</option></select></label>
+                <label class="ocr-language-select"><span data-i18n="ocrProvider">Bộ nhận dạng</span><select id="custom-ocr-provider"><option value="local" data-i18n="ocrProviderLocal">OCR tại máy</option><option value="gemini" data-i18n="ocrProviderGemini">Gemini API</option><option value="openai" data-i18n="ocrProviderOpenai">OpenAI API</option></select></label>
+                <p id="custom-ocr-api-hint" class="ocr-api-hint" data-i18n="ocrLocalHint">OCR tại máy giữ ảnh trên thiết bị; ảnh có cả Việt và Anh sẽ dùng mô hình kết hợp.</p>
+              </div>
+              <label id="custom-ocr-drop" class="file-drop-zone ocr-drop-zone" for="custom-ocr-input">
+                <strong data-i18n="dropImage">Kéo ảnh vào đây hoặc bấm để chọn</strong>
+                <span data-i18n="imageSupport">PNG, JPG, JPEG, WebP · tối đa 5 MB · chữ in rõ, một cột</span>
+                <input id="custom-ocr-input" type="file" accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp" />
+              </label>
+              <div class="ocr-sample-row">
+                <span data-i18n="sampleImages">Ảnh mẫu:</span>
+                <button type="button" data-ocr-sample="./sample-images/sample-bai-hoc-1.png">Mẫu 1</button>
+                <button type="button" data-ocr-sample="./sample-images/sample-bai-hoc-2.jpg">Mẫu 2</button>
+                <button type="button" data-ocr-sample="./sample-images/sample-bai-hoc-3.webp">Mẫu 3</button>
+              </div>
+              <div class="ocr-workspace">
+                <div class="ocr-preview-card">
+                  <div id="custom-ocr-empty" class="ocr-empty" data-i18n="noImage">Chưa có ảnh</div>
+                  <img id="custom-ocr-preview" class="hidden" alt="Ảnh chờ OCR" />
+                </div>
+                <div class="ocr-controls-card">
+                  <div class="ocr-button-row">
+                    <button id="custom-ocr-rotate-left" type="button">↶ <span data-i18n="rotateLeft">Xoay trái</span></button>
+                    <button id="custom-ocr-rotate-right" type="button">↷ <span data-i18n="rotateRight">Xoay phải</span></button>
+                  </div>
+                  <label class="loader-check"><input id="custom-ocr-grayscale" type="checkbox" checked /><span data-i18n="grayscale">Chuyển ảnh xám</span></label>
+                  <label class="ocr-range"><span><span data-i18n="contrast">Tương phản</span> <b id="custom-ocr-contrast-value">1.3×</b></span><input id="custom-ocr-contrast" type="range" min="0.8" max="2" step="0.1" value="1.3" /></label>
+                  <button id="custom-ocr-recognize" class="loader-small-button primary" type="button" disabled data-i18n="recognize">NHẬN DẠNG CHỮ</button>
+                  <button id="custom-ocr-cancel" class="loader-small-button danger hidden" type="button" data-i18n="cancelOcr">Hủy OCR</button>
+                  <div id="custom-ocr-progress" class="ocr-progress hidden"><i><b id="custom-ocr-progress-bar"></b></i></div>
+                  <p id="custom-ocr-status" class="loader-inline-status" data-i18n="chooseImage">Chọn ảnh để bắt đầu.</p>
+                </div>
+              </div>
+              <section id="custom-ocr-review" class="ocr-review-card hidden" aria-live="polite">
+                <div class="ocr-review-heading">
+                  <div>
+                    <strong data-i18n="ocrReview">Văn bản OCR - hãy kiểm tra lại trước khi tạo bài</strong>
+                    <p id="custom-ocr-correction-summary" data-i18n="ocrReviewHelp">So sánh bản gốc và bản đã sửa trước khi dùng.</p>
+                  </div>
+                  <div class="ocr-review-actions">
+                    <button id="custom-ocr-proofread" type="button" data-i18n="ocrProofread">SOÁT LỖI BẰNG AI</button>
+                    <button id="custom-ocr-use-corrected" class="active" type="button" data-i18n="ocrRestoreCorrected">Khôi phục bản đã sửa</button>
+                    <button id="custom-ocr-use-raw" type="button" data-i18n="ocrUseRaw">Dùng bản OCR gốc</button>
+                  </div>
+                </div>
+                <div id="custom-ocr-diff" class="ocr-diff-preview hidden" aria-label="Các phần OCR đã thay đổi"></div>
+                <div class="ocr-review-columns">
+                  <label class="loader-field ocr-result-field">
+                    <span data-i18n="ocrCorrectedVersion">Bản đã sửa - có thể chỉnh tiếp</span>
+                    <textarea id="custom-ocr-result" rows="8" placeholder="Kết quả nhận dạng xuất hiện tại đây. Bạn có thể sửa trước khi phân tích." data-i18n-placeholder="ocrPlaceholder"></textarea>
+                  </label>
+                  <label class="loader-field ocr-result-field">
+                    <span data-i18n="ocrRawVersion">Bản OCR gốc - chỉ để đối chiếu</span>
+                    <textarea id="custom-ocr-raw-result" rows="8" readonly placeholder="Bản OCR gốc xuất hiện tại đây." data-i18n-placeholder="ocrRawPlaceholder"></textarea>
+                  </label>
+                </div>
+              </section>
+              <button id="custom-ocr-analyze" class="loader-small-button primary" type="button" disabled data-i18n="useOcrText">ĐƯA VĂN BẢN OCR VÀO BÀI HỌC</button>
+              <p class="loader-note" data-i18n="ocrScope">Không hỗ trợ chữ viết tay, PDF, camera hoặc ảnh nhiều cột phức tạp.</p>
+            </div>
+
+          </article>
+          <article class="loader-panel loader-filter-panel">
+            <div class="loader-panel-heading compact"><div><span class="loader-step">02</span><h2 data-i18n="wordFilter">Bộ lọc từ</h2></div></div>
+            <div class="filter-grid">
+              <label class="loader-check"><input id="custom-nouns" type="checkbox" /><span>Chỉ giữ danh từ</span></label>
+              <label class="loader-check"><input id="custom-common" type="checkbox" /><span>Loại bỏ từ quá phổ biến</span></label>
+              <label class="loader-check"><input id="custom-verbs" type="checkbox" /><span>Chỉ giữ động từ</span></label>
+              <label class="loader-check"><input id="custom-specialized" type="checkbox" /><span>Loại bỏ từ chuyên ngành</span></label>
+              <label class="loader-check"><input id="custom-adjectives" type="checkbox" /><span>Chỉ giữ tính từ</span></label>
+              <label class="loader-check"><input id="custom-compounds" type="checkbox" /><span>Giữ cụm từ tiếng Việt</span></label>
+            </div>
+            <p class="loader-note">Từ loại và từ chuyên ngành được ước lượng theo từ điển cục bộ; có thể bỏ sót từ ngoài từ điển.</p>
+            <details class="custom-advanced"><summary>Tùy chọn bổ sung</summary><div class="filter-grid">
+              <label class="loader-check"><input id="custom-case-sensitive" type="checkbox" /><span data-i18n="caseSensitive">Phân biệt chữ hoa</span></label>
+              <label class="loader-check"><input id="custom-allow-symbols" type="checkbox" /><span data-i18n="allowSymbols">Cho phép số và ký tự Shift</span></label>
+              <label class="loader-check"><input id="custom-deduplicate" type="checkbox" /><span data-i18n="removeDuplicates">Loại từ trùng</span></label>
+              <label class="loader-check"><input id="custom-shuffle" type="checkbox" /><span data-i18n="shuffleOrder">Trộn thứ tự</span></label>
+              <label class="loader-check"><input id="custom-vietnamese-only" type="checkbox" checked /><span data-i18n="latinOnly">Chỉ chữ Việt/Latin</span></label>
+            </div></details>
+            <div class="length-filter-row">
+              <label><span data-i18n="length">Độ dài</span><select id="custom-length-preset"><option value="all" data-i18n="all">Tất cả</option><option value="short">1–3</option><option value="medium">4–5</option><option value="long">6–7</option><option value="extra">8+</option><option value="custom" data-i18n="customRange">Tùy chỉnh</option></select></label>
+              <label><span data-i18n="minimum">Tối thiểu</span><input id="custom-min-length" type="number" min="1" max="24" value="1" disabled /></label>
+              <label><span data-i18n="maximum">Tối đa</span><input id="custom-max-length" type="number" min="1" max="24" value="24" disabled /></label>
+            </div>
+          </article>
+
+          </div>
+          <article class="loader-panel loader-preview-panel">
+            <div class="loader-panel-heading">
+              <div><span class="loader-step">03</span><h2 data-i18n="previewEdit">Xem trước và chỉnh sửa</h2></div>
+              <span class="loader-badge" data-i18n="maxWords">Không giới hạn số từ</span>
+            </div>
+            <div class="custom-stats-grid">
+              <div><span data-i18n="sourceCharacters">Ký tự nguồn</span><strong data-custom-stat="sourceCharacters">0</strong></div>
+              <div><span data-i18n="tokensFound">Từ tìm thấy</span><strong data-custom-stat="tokensFound">0</strong></div>
+              <div><span data-i18n="valid">Hợp lệ</span><strong data-custom-stat="validWords">0</strong></div>
+              <div><span data-i18n="rejected">Bị loại</span><strong data-custom-stat="rejectedWords">0</strong></div>
+              <div><span data-i18n="duplicates">Trùng lặp</span><strong data-custom-stat="duplicateWords">0</strong></div>
+              <div class="easy"><span data-i18n="easy">Dễ</span><strong data-custom-stat="easy">0</strong></div>
+              <div class="medium"><span data-i18n="medium">Vừa</span><strong data-custom-stat="medium">0</strong></div>
+              <div class="hard"><span data-i18n="hard">Khó</span><strong data-custom-stat="hard">0</strong></div>
+            </div>
+
+            <div class="preview-toolbar">
+              <input id="custom-preview-search" type="search" placeholder="Tìm trong danh sách..." data-i18n-placeholder="searchList" />
+              <button id="custom-restore-list" type="button" data-i18n="restore">Khôi phục</button>
+              <button id="custom-clear-list" type="button" data-i18n="clearAll">Xóa hết</button>
+            </div>
+            <div class="list-tools order-mode-tools" aria-label="Cách sắp xếp danh sách">
+              <button id="custom-dedupe-list" type="button" data-i18n="removeDuplicates">Loại trùng</button>
+              <button id="custom-original-order" class="selected" type="button" data-order-mode="original" data-i18n="originalOrder">Thứ tự gốc</button>
+              <button id="custom-shuffle-list" type="button" data-order-mode="shuffle" data-i18n="shuffleOrder">Trộn thứ tự</button>
+              <button id="custom-sort-alpha" type="button" data-order-mode="alphabetical">A–Z</button>
+              <button id="custom-sort-difficulty" type="button" data-order-mode="difficulty" data-i18n="byDifficulty">Theo độ khó</button>
+              <button id="custom-copy-list" type="button" data-i18n="copy">Sao chép</button>
+            </div>
+            <section class="learning-order-panel" aria-label="Chế độ học theo trình tự">
+              <fieldset class="custom-learning-order"><legend>Thứ tự học trong màn chơi</legend>
+                <label><input type="radio" name="custom-learning-order" value="original" checked />Thứ tự gốc</label>
+                <label><input type="radio" name="custom-learning-order" value="shuffle" />Trộn ngẫu nhiên</label>
+                <label><input type="radio" name="custom-learning-order" value="difficulty" />Theo độ khó</label>
+                <label><input type="radio" name="custom-learning-order" value="alphabetical" />A → Z</label>
+              </fieldset>
+              <div>
+                <strong data-i18n="sequenceTitle">Học theo trình tự bài gốc</strong>
+                <p id="custom-keep-duplicates-note">Các tiếng lặp đang được giữ lại để bảo toàn trình tự bài học.</p>
+              </div>
+              <label class="learning-choice"><input id="custom-sequence-spawn" name="sequence-mode" type="radio" /><span><b data-i18n="spawnInOrder">Sinh theo thứ tự</b><small data-i18n="spawnInOrderDesc">Mục tiêu xuất hiện theo đúng thứ tự nhưng vẫn cho phép chọn mục tiêu đang thấy.</small></span></label>
+              <label class="learning-choice"><input id="custom-sequence-learning" name="sequence-mode" type="radio" checked /><span><b data-i18n="learnSequentially">Học lần lượt</b><small data-i18n="learnSequentiallyDesc">Phải hoàn thành mục hiện tại trước khi chuyển sang mục tiếp theo.</small></span></label>
+              <label class="loader-check split-sentence-choice"><input id="custom-split-sentence" type="checkbox" /><span data-i18n="splitSentences">Chia bài theo câu hoặc xuống dòng</span></label>
+            </section>
+            <div class="custom-preview-heading"><h3>Danh sách từ <span id="custom-list-count">0</span></h3><label><input id="custom-show-difficulty" type="checkbox" checked /> Hiện độ khó</label></div>
+            <div id="custom-preview-list" class="word-chip-list" aria-live="polite"></div>
+            <p id="custom-preview-more" class="preview-more"></p>
+            <button id="custom-show-more" type="button" class="hidden">Xem thêm 100 mục</button>
+
+            <div class="manual-word-row">
+              <input id="custom-add-input" type="text" maxlength="24" placeholder="Thêm một từ thủ công" data-i18n-placeholder="addWord" />
+              <select id="custom-add-level" aria-label="Độ khó từ mới"><option value="auto">Tự động</option><option value="easy">Dễ</option><option value="medium">Trung bình</option><option value="hard">Khó</option></select>
+              <button id="custom-add-button" type="button" data-i18n="add">Thêm</button>
+            </div>
+            <p id="custom-add-error" class="loader-error-line"></p>
+
+            <div class="loader-divider"></div>
+            <div class="export-row">
+              <button id="custom-export-txt" type="button" data-i18n="exportTxt">Xuất TXT</button>
+              <button id="custom-export-json" type="button" data-i18n="exportJson">Xuất JSON</button>
+              <button id="custom-import-json" type="button" data-i18n="importJson">Nhập JSON</button>
+              <button id="custom-delete-saved" class="danger" type="button" data-i18n="deleteSaved">Xóa bản đã lưu</button>
+              <input id="custom-import-json-input" class="hidden" type="file" accept="application/json,.json" />
+            </div>
+
+            <p id="custom-create-status" class="custom-create-status warning">Cần ít nhất 10 tiếng hợp lệ.</p>
+            <button id="custom-create-button" class="primary-button custom-create-button" type="button" disabled><span data-i18n="createGame">TẠO MÀN CHƠI</span><b>→</b></button>
+          </article>
+        </section>
+      </main>
+
+      <main id="course-pane" class="course-pane menu-pane hidden" data-menu-pane="course" aria-label="Khóa học luyện gõ đa ngôn ngữ"></main>
+
+      <main id="minigames-pane" class="minigames-pane menu-pane hidden" data-menu-pane="minigames" aria-label="Khu trò chơi bổ trợ" data-i18n-aria-label="miniGamesArea">
+        <div id="minigames-root"></div>
+      </main>
+
+    </section>
+
+    <section id="game-screen" class="screen game-screen hidden" aria-label="Khu vực chơi" data-i18n-aria-label="gameArea">
+      <header class="game-hud">
+        <div class="hud-brand"><span>⌨</span><strong data-i18n="appName">PHI ĐỘI NGÔN TỪ</strong></div>
+        <div class="hud-stats">
+          <div><span data-i18n="score">ĐIỂM</span><strong id="hud-score">0</strong></div>
+          <div><span data-i18n="combo">COMBO</span><strong id="hud-combo">0</strong></div>
+          <div><span data-i18n="accuracy">CHÍNH XÁC</span><strong id="hud-accuracy">100%</strong></div>
+          <div><span data-i18n="level">MÀN</span><strong id="hud-level">1</strong></div>
+          <div class="shield-stat"><span data-i18n="shield">LÁ CHẮN</span><strong id="hud-shield">100</strong><i><b id="shield-bar"></b></i></div>
+        </div>
+        <div class="hud-actions game-control-bar" aria-label="Điều khiển ván chơi" data-i18n-aria-label="gameControls">
+          <button id="pause-button" class="game-control-button primary-control" type="button" aria-label="Tạm dừng" title="Tạm dừng (Esc)"><span>⏸</span><b>Tạm dừng</b></button>
+          <button id="hud-restart-button" class="game-control-button" type="button" aria-label="Chơi lại" title="Chơi lại ván này"><span>↻</span><b>Chơi lại</b></button>
+          <button id="hud-home-button" class="game-control-button" type="button" aria-label="Về trang chủ" title="Dừng và về trang chủ"><span>⌂</span><b>Trang chủ</b></button>
+          <button id="hud-custom-button" class="game-control-button" type="button" aria-label="Tạo màn chơi mới" title="Dừng và tạo màn chơi mới"><span>✎</span><b>Tạo màn</b></button>
+          <button id="hud-report-button" class="game-control-button" type="button" aria-label="Báo từ hoặc bản dịch sai" title="Báo từ hoặc bản dịch sai"><span>!</span><b>Báo từ sai</b></button>
+          <button id="game-sound-button" class="game-control-button icon-only-control" type="button" aria-label="Âm thanh" title="Bật hoặc tắt âm thanh" data-i18n-aria-label="sound" data-i18n-title="soundToggle"><span>🔊</span></button>
+          <button id="fullscreen-button" class="game-control-button icon-only-control" type="button" aria-label="Toàn màn hình" title="Toàn màn hình" data-i18n-aria-label="fullscreen" data-i18n-title="fullscreen"><span>⛶</span></button>
+        </div>
+      </header>
+
+      <main id="game-stage" class="game-stage">
+        <canvas id="game-canvas" aria-label="Thiên thạch mang một từ luyện gõ" data-i18n-aria-label="canvasLabel"></canvas>
+        <input id="typing-input" class="typing-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Vùng nhập chữ cho trò chơi" data-i18n-aria-label="typingInputLabel" />
+        <div id="countdown" class="countdown hidden" aria-live="assertive">3</div>
+        <div id="toast" class="game-toast hidden" aria-live="polite"></div>
+        <div id="course-keyboard-hud" class="course-keyboard-hud hidden" aria-label="Bàn phím ảo hướng dẫn ngón tay" data-i18n-aria-label="virtualKeyboardLabel"></div>
+        <div class="input-status">
+          <div class="status-corner status-left">
+          <div><span data-i18n="target">MỤC TIÊU</span><strong id="hud-target">Chưa khóa</strong></div>
+          <div class="current-input"><span data-i18n="currentInput">ĐANG GÕ</span><strong id="hud-input">—</strong></div>
+          <div id="english-meaning-hud" class="english-meaning-hud hidden" aria-live="polite">
+          <div><span data-i18n="learningWord">TỪ ĐANG HỌC</span><strong id="hud-meaning-word">Chưa khóa mục tiêu</strong></div>
+          <div><span id="hud-meaning-label">NGHĨA</span><strong id="hud-meaning-text">Chọn một mục tiêu để xem nghĩa.</strong></div>
+        </div>
+          <div id="typing-guide-panel" class="typing-guide-panel" data-hands="on"></div>
+          </div>
+          <div class="status-corner status-right">
+          <div><span data-i18n="completed">HOÀN THÀNH</span><strong id="hud-completed">0</strong></div>
+          <div><span data-i18n="language">NGÔN NGỮ</span><strong id="hud-mode">TIẾNG VIỆT</strong></div>
+          <div><span data-i18n="source">NGUỒN TỪ</span><strong id="hud-source">MẶC ĐỊNH</strong></div>
+          <div id="course-hud-item" class="hidden"><span data-i18n="courseLabel">KHÓA HỌC</span><strong id="hud-course-title">—</strong></div>
+          <div id="lesson-progress-item" class="lesson-progress-item hidden"><span data-i18n="lessonLabel">BÀI HỌC</span><strong id="hud-lesson-progress">0 / 0</strong><i><b id="lesson-progress-bar"></b></i></div>
+          </div>
+        </div>
+      </main>
+    </section>
+
+    <div id="pause-overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pause-title">
+      <div class="dialog-card pause-dialog">
+        <span class="dialog-icon">⏸</span>
+        <h2 id="pause-title" data-i18n="pauseTitle">Đang tạm dừng</h2>
+        <p data-i18n="pauseDescription">Thiên thạch, đạn và thời gian đã dừng. Nhấn Escape để tiếp tục.</p>
+
+        <div class="pause-action-grid">
+          <button id="resume-button" class="primary-button" type="button"><span>▶</span> TIẾP TỤC</button>
+          <button id="restart-button" class="secondary-button" type="button"><span>↻</span> <span data-i18n="restartGame">CHƠI LẠI VÁN NÀY</span></button>
+          <button id="pause-home-button" class="secondary-button" type="button"><span>⌂</span> <span data-i18n="homeUpper">VỀ TRANG CHỦ</span></button>
+          <button id="pause-custom-button" class="secondary-button accent-secondary" type="button"><span>✎</span> <span data-i18n="createUpper">TẠO MÀN CHƠI MỚI</span></button>
+          <button id="pause-fullscreen-button" class="text-button pause-fullscreen-button" type="button">⛶ <span data-i18n="fullscreenToggle">Bật / thoát toàn màn hình</span></button>
+        </div>
+
+        <section class="sound-mixer" aria-labelledby="sound-mixer-title">
+          <div class="sound-mixer-heading">
+            <div><span data-i18n="sound">ÂM THANH</span><strong id="sound-mixer-title" data-i18n="soundMixer">Bộ trộn hiệu ứng</strong></div>
+            <button id="pause-sound-toggle" type="button" aria-label="Bật hoặc tắt âm thanh">🔊</button>
+          </div>
+          <label class="volume-control">
+            <span><span data-i18n="masterVolume">Âm lượng tổng</span> <b id="master-volume-value">100%</b></span>
+            <input id="master-volume-slider" type="range" min="0" max="100" step="1" value="100" />
+          </label>
+          <label class="volume-control">
+            <span><span data-i18n="gameEffects">Hiệu ứng game</span> <b id="sfx-volume-value">100%</b></span>
+            <input id="sfx-volume-slider" type="range" min="0" max="100" step="1" value="100" />
+          </label>
+          <div class="sound-test-row">
+            <button id="test-shot-button" type="button">⚡ <span data-i18n="testShot">Nghe thử phát bắn</span></button>
+            <button id="test-explosion-button" type="button">💥 <span data-i18n="testExplosion">Nghe thử vụ nổ</span></button>
+          </div>
+        </section>
+
+        <p class="shortcut-hint">Phím tắt khi tạm dừng: <kbd>R</kbd> chơi lại · <kbd>H</kbd> trang chủ · <kbd>C</kbd> tạo màn</p>
+      </div>
+    </div>
+
+    <div id="exit-confirm-overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="exit-confirm-title">
+      <div class="dialog-card exit-confirm-dialog">
+        <span class="dialog-icon warning-icon">!</span>
+        <h2 id="exit-confirm-title" data-i18n="exitTitle">Bạn muốn dừng ván hiện tại?</h2>
+        <p data-i18n="exitDescription">Điểm của ván đang chơi sẽ không được ghi nhận. Danh sách tùy chỉnh gần nhất vẫn được giữ.</p>
+        <div class="exit-confirm-actions">
+          <button id="exit-cancel-button" class="secondary-button" type="button" data-i18n="cancelContinue">HỦY - TIẾP TỤC CHƠI</button>
+          <button id="exit-home-confirm-button" class="secondary-button" type="button">⌂ <span data-i18n="stopHome">DỪNG VÀ VỀ TRANG CHỦ</span></button>
+          <button id="exit-custom-confirm-button" class="primary-button" type="button">✎ <span data-i18n="stopCustom">DỪNG VÀ TẠO MÀN MỚI</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="result-overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="result-title">
+      <div class="dialog-card result-dialog">
+        <span class="dialog-icon">✦</span>
+        <h2 id="result-title">Nhiệm vụ kết thúc</h2>
+        <p id="result-subtitle">Bạn đã bảo vệ quỹ đạo rất tốt.</p>
+        <div class="result-grid">
+          <div><span data-i18n="score">Điểm</span><strong id="result-score">0</strong></div>
+          <div><span data-i18n="level">Màn</span><strong id="result-level">1</strong></div>
+          <div><span data-i18n="accuracy">Độ chính xác</span><strong id="result-accuracy">100%</strong></div>
+          <div><span data-i18n="speed">Tốc độ</span><strong id="result-wpm">0 WPM</strong></div>
+          <div><span data-i18n="resultWords">Từ hoàn thành</span><strong id="result-completed">0</strong></div>
+          <div><span data-i18n="maxCombo">Combo cao nhất</span><strong id="result-combo">0</strong></div>
+        </div>
+        <div id="result-course-stars" class="result-course-stars hidden" aria-live="polite"></div>
+        <p id="shot-validation" class="validation-line"></p>
+        <button id="result-restart-button" class="primary-button" type="button" data-i18n="replay">HỌC LẠI / CHƠI LẠI</button>
+        <button id="result-edit-lesson-button" class="secondary-button" type="button">✎ <span data-i18n="editLesson">CHỈNH SỬA BÀI HỌC</span></button>
+        <button id="result-report-word-button" class="secondary-button" type="button">! BÁO TỪ / BẢN DỊCH SAI</button>
+        <button class="text-button menu-return" type="button" data-i18n="mainScreen">Về màn hình chính</button>
+      </div>
+    </div>
+
+    <div id="instructions-overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="instructions-title">
+      <div class="dialog-card instructions-dialog">
+        <button id="close-instructions" class="dialog-close" type="button" aria-label="Đóng">×</button>
+        <span class="step-label" data-i18n="instructions">HƯỚNG DẪN</span>
+        <h2 id="instructions-title" data-i18n="oneShotTitle">Mỗi ký tự đúng - một viên đạn</h2>
+        <div class="instruction-steps">
+          <article><b>1</b><div><strong data-i18n="instructionStep1Title">Gõ để khóa</strong><p data-i18n="instructionStep1">Game ưu tiên thiên thạch gần vùng phòng thủ nhất khi nhiều mục tiêu có cùng chữ đầu.</p></div></article>
+          <article><b>2</b><div><strong data-i18n="instructionStep2Title">Mỗi ký tự đúng = 1 viên</strong><p data-i18n="oneShotStep2">Mỗi ký tự hoàn chỉnh và đúng tạo đúng một viên đạn; trạng thái Telex/IME tạm thời không bắn thừa.</p></div></article>
+          <article><b>3</b><div><strong data-i18n="instructionStep3Title">Viên cuối mới phá hủy</strong><p data-i18n="oneShotStep3">Các viên đạn trúng lần lượt từng ký tự. Chỉ viên của ký tự cuối cùng mới phá hủy thiên thạch.</p></div></article>
+        </div>
+        <div class="telex-example"><span data-i18n="telexExample">Ví dụ Telex:</span><code>d → d → o → r</code><strong data-i18n="telexResult">đỏ = 2 phát đúng ký tự</strong></div>
+        <p class="instruction-note">Dùng bộ gõ hệ thống: hãy bật UniKey Telex hoặc VNI. Dùng Telex tích hợp: hãy tắt UniKey để tránh nhân đôi dấu.</p>
+      </div>
+    </div>
+
+    <div id="mobile-warning" class="mobile-warning hidden" data-i18n="mobileWarning">Trò chơi được tối ưu cho máy tính có bàn phím.</div>
+  </div>
+  <script src="./config.js"></script>
+  <script src="./config/ocr.config.js"></script>
+  <script src="./config/voice.config.js"></script>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

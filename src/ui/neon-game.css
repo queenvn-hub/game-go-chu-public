@@ -1,0 +1,108 @@
+/* The gameplay skin keeps all counters, keycaps and controls live. */
+#game-screen { background:#02091e; }
+#game-screen * { letter-spacing:0; }
+#game-screen .game-hud { display:grid; grid-template-columns:17% 42% minmax(0,1fr); gap:6px; padding:6px; height:auto; flex-shrink:0; min-height:76px; background:#020b20; border-bottom:2px solid #30d9ff; }
+#game-screen .hud-brand { min-width:0; max-width:none; width:100%; position:relative; padding:0; }
+#game-screen .hud-brand>span,#game-screen .hud-brand>strong { display:none; }
+#game-screen .hud-brand .neon-art { width:100%; height:60px; }
+#game-screen .hud-stats { position:static; display:grid; grid-template-columns:1fr .9fr 1.05fr .8fr 1.6fr; gap:5px; min-width:0; width:100%; }
+#game-screen .hud-stats>div { display:grid; grid-template-columns:27px minmax(0,1fr); grid-template-rows:auto auto; align-content:center; column-gap:5px; min-width:0; padding:6px; border:1px solid #24aaff; border-radius:9px; background:linear-gradient(145deg,#102e77,#040c2e 65%); box-shadow:inset 0 0 0 2px #134ea255,0 0 5px #007bff66; }
+#game-screen .hud-stats .neon-art { width:27px; height:33px; grid-row:1/3; align-self:center; }
+#game-screen .hud-stats span { color:#b6c7ff; font-size:10px; line-height:1.3; white-space:normal; }
+#game-screen .hud-stats strong { color:white; font-size:23px; line-height:1.2; }
+#game-screen .hud-stats .shield-stat { position:relative; padding-bottom:15px; }
+#game-screen .shield-stat>i { position:absolute; bottom:5px; left:38px; right:8px; width:auto; height:7px; margin:0; background:#21315c; border:1px solid #5778b9; border-radius:6px; }
+#game-screen #shield-bar { background:linear-gradient(90deg,#219bff,#7fefff); }
+#game-screen .hud-actions { position:static; transform:none; display:flex; gap:4px; justify-content:stretch; min-width:0; width:100%; }
+#game-screen .game-control-button { position:relative; display:flex; align-items:center; justify-content:center; gap:5px; min-width:0; min-height:54px; padding:5px; flex:1 1 auto; border:1px solid #269eff; border-radius:10px; color:white; background:linear-gradient(150deg,#102366,#020b27); box-shadow:inset 0 0 4px #2479ff; }
+#game-screen .game-control-button>span { display:none; }
+#game-screen .game-control-button b { font-size:10px; white-space:normal; line-height:1.2; }
+#game-screen .neon-control-icon { width:20px; height:20px; flex-shrink:0; order:-1; filter:drop-shadow(0 0 3px #5859ff); }
+#game-screen #hud-report-button .neon-control-icon { color:#ff6557; }
+#game-screen .icon-only-control { flex:0 0 32px; }
+#game-screen .game-control-button:hover { background:#162e79; border-color:#65eaff; }
+#game-stage { --keyboard-width:42%; --keyboard-height:clamp(230px,29vh,310px); --cockpit-bottom:10px; }
+#game-stage::after { display:none; }
+#game-stage .input-status { position:absolute; inset:0; width:100%; height:auto; min-height:0; padding:0; display:block; transform:none; pointer-events:none; background:none; border:0; border-radius:0; box-shadow:none; backdrop-filter:none; }
+#game-stage .input-status>.status-corner { pointer-events:auto; }
+#game-stage #course-keyboard-hud:not(.hidden) { left:27%; width:42%; transform:none; bottom:10px; padding:9px; border:1px solid #2ce8ff; border-radius:12px; background:linear-gradient(150deg,#0e2866,#030b24 65%); box-shadow:inset 0 0 0 3px #123881,0 0 8px #1884ff77; }
+#game-stage .keyboard-full { grid-template-columns:1fr; transform:none; gap:0; }
+#game-stage .keyboard-nav,#game-stage .keyboard-numpad,#game-stage .keyboard-function-row { display:none; }
+#game-stage .game-keyboard-rows { gap:5px; }
+#game-stage .game-keyboard-rows>div { gap:4px; }
+#game-stage .game-keyboard-rows>div:first-child { display:none; }
+#game-stage .keyboard-full i { border:1px solid #4487d5; border-radius:5px; background:linear-gradient(145deg,#152d57,#080f2b); box-shadow:inset 0 1px 3px #5985c577; }
+#game-stage .keyboard-full i b,#game-stage .keyboard-full i small { color:#f3f5ff; }
+#game-stage .keyboard-full i b { font-size:14px; font-weight:700; }
+#game-stage .keyboard-full .key-special b { font-size:10px; }
+#game-stage .keyboard-full i.next,#game-stage .keyboard-full i.hand-key-pressed { background:#514414; border:2px solid #ffde39; box-shadow:0 0 13px #ffe52eaa,inset 0 0 6px #fcca35; }
+#game-stage .keyboard-full i.next b { color:#fff391; }
+#game-stage .keyboard-full i[data-key="f"]::after,#game-stage .keyboard-full i[data-key="j"]::after { background:#9badcf; box-shadow:none; }
+#game-stage .keyboard-motion-hands .motion-palm { fill:#6789ff10; stroke:#f3f6ff; }
+#game-stage .keyboard-motion-hands .is-guiding { fill:#ffd52f40; stroke:#fff083; }
+#game-stage .keyboard-motion-hands [data-state="pressing"] .is-guiding { fill:#ffd52f88; stroke:#ffffce; }
+#game-stage .input-status>.status-corner { bottom:10px; height:var(--keyboard-height); border:1px solid #26dfff; border-radius:12px; background:linear-gradient(145deg,#102566,#030b26); box-shadow:inset 0 0 0 3px #12438c,0 0 8px #1884ff66; padding:10px; overflow:auto; }
+#game-stage .input-status>.status-left { left:.5%; width:26%; display:grid!important; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:8px!important; align-content:stretch; }
+#game-stage .status-left>div:not(#typing-guide-panel):not(#english-meaning-hud) { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; padding:10px; border:1px solid #348df0; border-radius:8px; background:#081b4d; }
+#game-stage .status-left #english-meaning-hud { grid-column:1/-1; display:grid; grid-template-columns:1fr 1fr; gap:12px; order:0; border:1px solid #348df0; border-radius:8px; padding:10px; align-items:center; background:#081b4d; }
+#game-stage .status-left #english-meaning-hud>div { min-width:0; }
+#game-stage .status-left #english-meaning-hud>div+div { border-left:1px solid #2461ab; padding-left:12px; }
+#game-stage .status-corner span { color:#c2caff; font-size:11px; }
+#game-stage .status-corner strong { color:white; font-size:20px; line-height:1.25; overflow-wrap:anywhere; }
+#game-stage #hud-input { color:#ffec64; }
+#game-stage #hud-meaning-word { color:white; }
+#game-stage #hud-meaning-text { font-size:17px; }
+#game-stage .input-status>.status-right { right:.5%; width:13%; display:grid; grid-template-columns:1fr; grid-auto-rows:minmax(0,1fr); gap:7px; align-content:stretch; }
+#game-stage .status-right>div { padding:7px; border:1px solid #348df0; border-radius:8px; background:#081b4d; }
+#game-stage #hud-completed { color:white; font-size:27px; }
+#game-stage .status-right #hud-source { font-size:14px; }
+#game-stage .typing-guide-panel { position:absolute; left:69.5%; bottom:10px; width:16.5%; height:var(--keyboard-height); padding:10px!important; border:1px solid #26dfff!important; border-radius:12px; background:linear-gradient(145deg,#11286a,#030b26); box-shadow:inset 0 0 0 3px #12438c; pointer-events:auto; overflow:auto; }
+#game-stage .typing-guide-panel .guide-heading { color:white; font-size:14px; margin-bottom:8px; }
+#game-stage .typing-guide-panel:not(.hidden) { display:block; }
+#game-stage .typing-guide-panel .game-keyboard-label { justify-content:space-between; }
+#game-stage .typing-guide-panel .game-keyboard-label strong { font-size:20px; background:#443b13; color:#ffe566; border:1px solid #ffe041; border-radius:6px; box-shadow:0 0 8px #fdda2677; }
+#game-stage .hand-picture { aspect-ratio:1448/760; max-height:none; background:transparent; }
+#game-stage .hand-picture svg { width:100%; height:100%; }
+#game-stage .hand-picture .neon-finger { fill:transparent; }
+#game-stage .hand-picture .neon-finger.active-finger { fill:#ffdd2866; stroke:#fff29b; stroke-width:10; filter:drop-shadow(0 0 12px #ffcc19); }
+#game-stage .typing-guide-panel .finger-caption { color:#ffe475; font-size:11px; }
+#game-stage .guide-scheme { font-size:9px; }
+@media(min-width:1700px) {
+ #game-screen .game-control-button b { font-size:12px; }
+ #game-screen .neon-control-icon { width:24px; height:24px; }
+ #game-screen .hud-stats span { font-size:12px; }
+ #game-screen .hud-stats strong { font-size:28px; }
+ #game-stage .keyboard-full i b { font-size:17px; }
+ #game-stage .keyboard-full .key-special b { font-size:12px; }
+}
+@media(max-width:1100px) {
+ #game-screen .game-hud { grid-template-columns:20% 1fr; }
+ #game-screen .hud-actions { grid-column:1/-1; }
+ #game-screen .game-control-button { min-height:34px; }
+ #game-stage .keyboard-full i b { font-size:10px; }
+ #game-stage .keyboard-full .key-special b { font-size:8px; }
+ #game-stage .status-corner strong { font-size:15px; }
+}
+@media(max-width:650px) {
+ #game-screen .game-hud { grid-template-columns:1fr; min-height:0; gap:4px; padding:4px; }
+ #game-screen .hud-brand { display:none; }
+ #game-screen .hud-stats>div { grid-template-columns:1fr; padding:4px; }
+ #game-screen .hud-stats .neon-art { display:none; }
+ #game-screen .hud-stats strong { font-size:18px; }
+ #game-screen .hud-stats span { font-size:8px; }
+ #game-screen .shield-stat>i { left:4px; }
+ #game-screen .game-control-button b { display:none; }
+ #game-screen .game-control-button { min-height:32px; }
+ #game-stage { --keyboard-height:145px; --cockpit-bottom:190px; }
+ #game-stage #course-keyboard-hud:not(.hidden) { left:1%; width:98%; bottom:190px; padding:6px; }
+ #game-stage .input-status>.status-left { left:1%; width:48%; height:172px; padding:5px; gap:4px!important; }
+ #game-stage .input-status>.status-right { right:1%; width:23%; height:172px; padding:4px; gap:3px; }
+ #game-stage .typing-guide-panel { left:50%; width:25%; height:172px; padding:5px!important; }
+ #game-stage .status-corner span { font-size:8px; }
+ #game-stage .status-corner strong,#game-stage #hud-meaning-text,#game-stage .status-right #hud-source { font-size:11px; }
+ #game-stage .status-left>div:not(#typing-guide-panel):not(#english-meaning-hud),#game-stage .status-left #english-meaning-hud { padding:4px; }
+ #game-stage .typing-guide-panel .guide-heading,#game-stage .typing-guide-panel .finger-caption { font-size:9px; }
+ #game-stage .typing-guide-panel .game-keyboard-label span { font-size:8px; }
+ #game-stage .guide-scheme { flex-wrap:wrap; }
+ #game-stage .game-keyboard-rows>div { gap:2px; }
+}

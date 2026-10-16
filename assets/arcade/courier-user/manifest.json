@@ -1,0 +1,25 @@
+{
+  "canvas": [
+    512,
+    512
+  ],
+  "format": "PNG RGBA",
+  "transparent_background": true,
+  "safe_margin_px": 21,
+  "files": [
+    "cat_idle.png",
+    "cat_run_01.png",
+    "cat_run_02.png",
+    "cat_run_03.png",
+    "cat_run_04.png",
+    "cat_jump_01.png",
+    "cat_jump_02.png",
+    "cat_jump_03.png",
+    "cat_jump_04.png",
+    "cat_jump_05.png",
+    "vent_01.png",
+    "vent_02.png",
+    "vent_03.png"
+  ],
+  "note": "Re-exported with expanded source crops and centered padding so no subject touches or crosses the 512x512 canvas edge."
+}

@@ -1,0 +1,82 @@
+/* This theme only applies to the play setup screen. */
+#menu-screen:has(#play-pane:not(.hidden)) { background:#f2f5ff; }
+#menu-screen:has(#play-pane:not(.hidden)) .topbar { max-width:none; width:calc(100% - 48px); height:88px; }
+#menu-screen:has(#play-pane:not(.hidden)) .brand { background:linear-gradient(120deg,#7563ff,#533aff); color:white; padding:10px 20px; border-radius:32px; font-size:21px; letter-spacing:0; }
+#menu-screen:has(#play-pane:not(.hidden)) .brand-mark { background:white; color:#6044ff; box-shadow:none; }
+#menu-screen:has(#play-pane:not(.hidden)) .menu-tabs { background:#ffffffdf; border-color:#dedfff; border-radius:32px; box-shadow:0 4px 12px #4838a512; }
+#menu-screen:has(#play-pane:not(.hidden)) .menu-tab { color:#454781; letter-spacing:0; border-radius:26px; }
+#menu-screen:has(#play-pane:not(.hidden)) .menu-tab.selected { background:linear-gradient(#7960ff,#543bff); color:white; box-shadow:0 3px 10px #6044ff30; }
+#play-pane { width:calc(100% - 48px); max-width:1600px; grid-template-columns:minmax(0,1.08fr) minmax(0,1fr); gap:18px; align-items:stretch; }
+#play-pane * { letter-spacing:0; }
+#play-pane .hero-card { position:relative; padding:32px; min-height:900px; border:0; border-radius:24px; background:#080e30 url('../../assets/space-nebula-v1.png') center/cover; isolation:isolate; }
+#play-pane .hero-card::before { content:''; position:absolute; inset:0; background:linear-gradient(#080c3299,transparent 75%); z-index:-1; }
+#play-pane .eyebrow { font-size:13px; color:#d5dcff; }
+#play-pane h1 { font-size:52px; line-height:1.18; max-width:none; margin:24px 0 16px; color:white; }
+#play-pane h1 span:last-child { color:#ffe453; }
+#play-pane h1 span:first-child { color:white; }
+#play-pane .hero-copy { max-width:none; color:white; font-size:18px; line-height:1.55; }
+#play-pane .launch-actions { display:none; }
+#play-pane .hero-metrics { position:relative; inset:auto; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:22px; }
+#play-pane .hero-metrics div { min-width:0; padding:14px; border-radius:18px; background:#171b615c; border-color:#6675d7; }
+#play-pane .hero-metrics strong { color:white; font-size:26px; }
+#play-pane .hero-metrics span { color:#dce4ff; font-size:14px; text-transform:none; }
+#play-pane .hero-visual.arcade-hero-visual { position:absolute; inset:auto 0 0; height:48%; width:100%; margin:0; }
+#play-pane .hero-ship-3d { width:55%; left:1%; top:0; transform:rotate(20deg); }
+#play-pane .hero-crystal-3d { width:32%; right:4%; top:25%; }
+#play-pane .play-dino { position:absolute; width:48%; bottom:0; left:0; }
+#play-pane .setup-card { padding:24px; border:0; border-radius:24px; color:#11184f; background:#fff; }
+#play-pane .setup-heading h2 { color:#11184f; font-size:30px; margin:8px 0; }
+#play-pane .step-label { color:#6144ff; background:#efebff; border-radius:20px; padding:6px 12px; display:inline-block; }
+#play-pane .best-score { background:#fff7e9; border:1px solid #ffe0ad; color:#865217; white-space:nowrap; }
+#play-pane .choice-section { margin:18px 0; }
+#play-pane .choice-section legend { color:#171955; font-size:16px; text-transform:none; margin-bottom:10px; }
+#play-pane .multilingual-settings { padding:14px; border-radius:16px; background:#f1f0ff; border:0; }
+#play-pane .multilingual-settings legend { color:#6044ff; font-size:14px; }
+#play-pane .language-settings-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+#play-pane select { width:100%; min-width:0; color:#1c2351; background:#fcfcff; border:1px solid #d9dcf0; border-radius:10px; min-height:44px; font-size:14px; }
+#play-pane label>span { color:#454b70; font-size:13px; text-transform:none; }
+#play-pane .preset-grid { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+#play-pane .preset-grid button { flex:1 1 95px; font-size:11px; background:white; color:#3b4275; border:1px solid #d8dbf1; border-radius:9px; padding:8px; }
+#play-pane .mode-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+#play-pane .mode-card { min-width:0; min-height:74px; border:1px solid #dcdef1; border-radius:14px; background:white; padding:12px 8px; color:#171955; }
+#play-pane .mode-card.selected { border-color:#6548ff; background:#f9f7ff; box-shadow:0 3px 9px #644aff22; }
+#play-pane .mode-icon { background:#f0edff; color:#6044ff; flex-shrink:0; width:28px; height:32px; font-size:15px; }
+#play-pane .mode-card strong { font-size:14px; overflow-wrap:anywhere; }
+#play-pane .mode-card i { background:#6247ff; flex-shrink:0; }
+#play-pane .segmented { background:#fafaff; border:1px solid #d9dcf0; border-radius:12px; padding:3px; }
+#play-pane .segmented button { color:#262b60; min-height:42px; font-size:13px; border-radius:10px; }
+#play-pane .segmented button.selected { color:white; background:linear-gradient(120deg,#7961ff,#573bff); box-shadow:0 2px 6px #6044ff20; }
+#play-pane .field-hint { font-size:12px; color:#636b89; }
+#play-pane .word-source-summary { background:#eff3ff; padding:10px; border-radius:10px; font-size:12px; color:#394476; gap:8px; }
+#play-pane .inline-link-button { color:#6346ff; }
+#play-pane .form-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+#play-pane .form-grid .wide-field { grid-column:auto; }
+#play-pane #start-button { width:100%; min-height:58px; border:0; background:linear-gradient(#8067ff,#5639fb); color:white; border-radius:19px; box-shadow:0 5px 12px #6346ff30; font-size:20px; }
+#play-pane :is(button,select,a):focus-visible { outline:3px solid #d59300; outline-offset:3px; }
+#play-pane .desktop-note { color:#6b7291; font-size:12px; }
+@media(min-width:1400px) {
+  #menu-screen:has(#play-pane:not(.hidden)) .menu-tabs { position:absolute; top:15px; left:360px; right:250px; width:auto; margin:0; }
+  #menu-screen:has(#play-pane:not(.hidden)) .menu-tab { font-size:12px; padding:10px; }
+}
+@media(max-width:1100px) {
+  #play-pane h1 { font-size:38px; }
+  #play-pane .hero-card { padding:24px; }
+  #play-pane .mode-grid { grid-template-columns:1fr; }
+}
+@media(max-width:760px) {
+  #menu-screen:has(#play-pane:not(.hidden)) .topbar { width:calc(100% - 24px); height:auto; min-height:80px; gap:8px; flex-wrap:wrap; padding:12px 0; }
+  #menu-screen:has(#play-pane:not(.hidden)) .brand { font-size:16px; padding:8px 12px; }
+  #play-pane { width:calc(100% - 24px); grid-template-columns:1fr; }
+  #play-pane .hero-card { min-height:330px; padding:22px; }
+  #play-pane h1 { font-size:32px; margin:14px 0; }
+  #play-pane .hero-copy { font-size:14px; }
+  #play-pane .hero-visual { display:none; }
+  #play-pane .hero-metrics { gap:6px; }
+  #play-pane .hero-metrics div { padding:8px; }
+  #play-pane .hero-metrics span { font-size:12px; }
+  #play-pane .setup-card { padding:18px; }
+  #play-pane .setup-heading { flex-wrap:wrap; gap:8px; }
+  #play-pane .language-settings-grid,#play-pane .form-grid { grid-template-columns:1fr; }
+  #play-pane .segmented button { overflow-wrap:anywhere; }
+  #play-pane .word-source-summary { flex-wrap:wrap; }
+}

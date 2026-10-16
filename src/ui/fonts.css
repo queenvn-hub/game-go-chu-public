@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'Baloo 2'; font-style: normal; font-weight: 800; font-display: swap;
+  src: url('../../assets/fonts/baloo2-800.ttf') format('truetype');
+}
+@font-face {
+  font-family: Nunito; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('../../assets/fonts/nunito-400.ttf') format('truetype');
+}
+@font-face {
+  font-family: Nunito; font-style: normal; font-weight: 600; font-display: swap;
+  src: url('../../assets/fonts/nunito-600.ttf') format('truetype');
+}
+@font-face {
+  font-family: Nunito; font-style: normal; font-weight: 700; font-display: swap;
+  src: url('../../assets/fonts/nunito-700.ttf') format('truetype');
+}
+@font-face {
+  font-family: Nunito; font-style: normal; font-weight: 800; font-display: swap;
+  src: url('../../assets/fonts/nunito-800.ttf') format('truetype');
+}
+:root {
+  --font-title: 'Baloo 2', 'Segoe UI', sans-serif;
+  --font-body: Nunito, 'Segoe UI', sans-serif;
+  font-family: var(--font-body);
+}
+body, button, input, select, textarea, .font-kids-body {
+  font-family: var(--font-body);
+}
+h1, h2, .brand, .font-kids-title, #game-stage .game-keyboard-label strong {
+  font-family: var(--font-title);
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: normal;
+}
+#game-stage .game-keyboard-rows { font-family: var(--font-body); }

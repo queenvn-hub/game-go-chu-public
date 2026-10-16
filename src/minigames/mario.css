@@ -1,0 +1,27 @@
+.mario-entry{margin:0 0 22px}
+.mario-card{width:100%;display:flex;align-items:center;gap:26px;text-align:left;border:1px solid #8bc6dd;border-radius:12px;padding:20px 26px;background:#e2f2fc url('../assets/arcade/postcard_rooftop_background.png') center bottom/cover;color:#123b70;cursor:pointer;min-height:170px;overflow:hidden;box-shadow:0 8px 24px rgba(18,59,112,0.12);transition:transform .18s ease,box-shadow .18s ease}
+.mario-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(18,59,112,0.18)}
+.mario-card>span:last-child{display:flex;flex-direction:column;gap:8px;background:rgba(255,255,255,0.92);backdrop-filter:blur(6px);padding:16px 22px;border-radius:10px;border:1px solid rgba(255,255,255,0.7)}
+.mario-card strong{font:800 28px 'Baloo 2',sans-serif;color:#173852;letter-spacing:-0.5px}
+.mario-card b{color:#0284c7;font-weight:700}
+.mario-card-art{display:flex;align-items:end;gap:16px;flex-shrink:0}
+.mario-card-art img{width:130px;height:130px;object-fit:contain;filter:drop-shadow(0 6px 12px rgba(0,0,0,0.18))}
+.mario-card-art img+img{width:75px;height:75px;animation:floatReward 2s ease-in-out infinite alternate}
+@keyframes floatReward{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+.mario-header{display:flex;align-items:center;gap:20px;margin-bottom:14px;color:#173852}
+.mario-header h1{font:800 28px 'Baloo 2',sans-serif;margin:0}
+.mario-header p{margin:0;font-size:13px}
+.mario-frame{display:block;width:100%;height:980px;border:1px solid #9bbacb;border-radius:8px;background:#b9def3}
+.mario-view [data-mario-status]{font-size:14px;color:#8b3c22}
+.mario-card:focus-visible{outline:3px solid #087bb9;outline-offset:3px}
+@media(max-width:700px){
+  .mario-card{padding:14px;gap:12px}
+  .mario-card-art img{width:70px;height:90px}
+  .mario-card-art img+img{display:none}
+  .mario-card>span:last-child{padding:10px}
+  .mario-card strong{font-size:24px}
+  .mario-card span{font-size:13px}
+  .mario-header{flex-wrap:wrap;gap:10px}
+  .mario-frame{height:1150px}
+  .mario-header h1{font-size:24px}
+}
